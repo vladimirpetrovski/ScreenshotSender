@@ -6,21 +6,21 @@
   android:layout_height="wrap_content">
 
   <ImageView
-    android:id="@+id/item_remove"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/ic_round_remove_circle_24px"
-    app:layout_constraintEnd_toEndOf="parent"/>
-
-  <ImageView
     android:id="@+id/item_thumbnail"
     android:layout_width="@dimen/thumbnail_size"
     android:layout_height="@dimen/thumbnail_size"
     android:layout_margin="@dimen/thumbnail_margin"
-    android:scaleType="centerCrop"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"/>
+
+  <ImageView
+    android:id="@+id/item_remove"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/ic_round_remove_circle_24px"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:background="?selectableItemBackgroundBorderless"/>
 
 </android.support.constraint.ConstraintLayout>
