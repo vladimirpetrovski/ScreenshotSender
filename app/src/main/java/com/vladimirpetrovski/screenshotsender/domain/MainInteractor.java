@@ -55,8 +55,7 @@ public class MainInteractor extends MviInteractor<MainState> {
 
   private Observable<Update<MainState>> buildScreenshotsUpdate(List<Screenshot> screenshots) {
     return Observable.just(ScreenshotChangedUpdate.builder()
-        .sendEnabled(latestState().getEmails().size() > 0
-            && latestState().getScreenshots().size() + screenshots.size() > 0)
+        .sendEnabled(latestState().getEmails().size() > 0 && screenshots.size() > 0)
         .screenshots(screenshots)
         .build());
   }
