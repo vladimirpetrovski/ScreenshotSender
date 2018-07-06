@@ -1,3 +1,5 @@
 <resources>
   <string name="app_name">ScreenshotSender</string>
+  <string name="send">Send</string>
+  <string name="enter_email">Enter email address</string>
 </resources>
