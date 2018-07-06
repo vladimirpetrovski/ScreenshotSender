@@ -16,10 +16,11 @@
       android:id="@+id/emails_chip_group"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:layout_margin="@dimen/thumbnail_margin"
       app:chip_deletable="true"
       app:chip_hasAvatarIcon="false"
       app:hint="@string/enter_email"
-      android:layout_margin="@dimen/thumbnail_margin"/>
+      app:showChipDetailed="false"/>
 
     <android.support.v7.widget.RecyclerView
       android:id="@+id/screenshots_list"
