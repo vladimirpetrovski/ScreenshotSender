@@ -1,6 +1,9 @@
 package com.vladimirpetrovski.screenshotsender.domain;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import com.vladimirpetrovski.screenshotsender.R;
 import com.vladimirpetrovski.screenshotsender.data.Screenshot;
 import com.vladimirpetrovski.screenshotsender.mvi.Mvi.Update;
 import com.vladimirpetrovski.screenshotsender.mvi.MviInteractor;
@@ -33,7 +36,21 @@ public class MainInteractor extends MviInteractor<MainState> {
   }
 
   public Observable<Update<MainState>> handleSendButtonClicks() {
-    //TODO implement
+    List<String> emails = latestState().getEmails();
+    List<Screenshot> screenshots = latestState().getScreenshots();
+
+    Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+    emailIntent.setType("plain/text");
+    emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, emails.toArray(new String[0]));
+    emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+        context.getString(R.string.screenshots));
+    ArrayList<Uri> uris = new ArrayList<>();
+    for (Screenshot screenshot : screenshots) {
+      uris.add(Uri.parse(screenshot.getPath()));
+    }
+    emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+    context.startActivity(emailIntent);
+
     return Observable.empty();
   }
 
