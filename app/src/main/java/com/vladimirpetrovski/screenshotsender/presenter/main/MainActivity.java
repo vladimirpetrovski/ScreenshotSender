@@ -1,14 +1,16 @@
 package com.vladimirpetrovski.screenshotsender.presenter.main;
 
+import static com.vladimirpetrovski.screenshotsender.presenter.main.MainPresenter.GALLERY_PICK_REQUEST_CODE;
+
+import android.content.ClipData;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.esafirm.imagepicker.features.ImagePicker;
-import com.esafirm.imagepicker.model.Image;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.pchmn.materialchips.ChipsInput;
 import com.pchmn.materialchips.ChipsInput.ChipsListener;
@@ -77,17 +79,29 @@ public class MainActivity extends DaggerAppCompatActivity implements MainViewCon
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
-      List<Image> images = ImagePicker.getImages(data);
-      screenshotsAddedSubject.onNext(map(images));
+    if (requestCode == GALLERY_PICK_REQUEST_CODE && resultCode == RESULT_OK) {
+      List<Uri> uris = new ArrayList<>();
+      if (data.getData() != null) {
+        uris.add(data.getData());
+      } else {
+        if (data.getClipData() != null) {
+          ClipData mClipData = data.getClipData();
+          for (int i = 0; i < mClipData.getItemCount(); i++) {
+            ClipData.Item item = mClipData.getItemAt(i);
+            Uri uri = item.getUri();
+            uris.add(uri);
+          }
+        }
+      }
+      screenshotsAddedSubject.onNext(map(uris));
     }
     super.onActivityResult(requestCode, resultCode, data);
   }
 
-  private List<Screenshot> map(List<Image> images) {
+  private List<Screenshot> map(List<Uri> uris) {
     List<Screenshot> screenshots = new ArrayList<>();
-    for (Image image : images) {
-      screenshots.add(Screenshot.builder().name(image.getName()).path(image.getPath()).build());
+    for (Uri uri : uris) {
+      screenshots.add(Screenshot.builder().name(uri.getPath()).path(uri.toString()).build());
     }
     return screenshots;
   }

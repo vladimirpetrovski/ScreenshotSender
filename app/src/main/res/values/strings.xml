@@ -3,4 +3,5 @@
   <string name="send">Send</string>
   <string name="enter_email">Enter email address</string>
   <string name="select_screenshots">Select Screenshots</string>
+  <string name="screenshots">Screenshots</string>
 </resources>

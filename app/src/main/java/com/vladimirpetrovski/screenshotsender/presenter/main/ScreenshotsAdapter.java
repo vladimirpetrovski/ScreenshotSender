@@ -1,5 +1,6 @@
 package com.vladimirpetrovski.screenshotsender.presenter.main;
 
+import android.net.Uri;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.v7.recyclerview.extensions.ListAdapter;
@@ -17,7 +18,6 @@ import com.vladimirpetrovski.screenshotsender.R;
 import com.vladimirpetrovski.screenshotsender.data.Screenshot;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
-import java.io.File;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
@@ -65,7 +65,7 @@ public class ScreenshotsAdapter extends ListAdapter<Screenshot, ViewHolder> {
       ScreenshotViewHolder holder = (ScreenshotViewHolder) viewHolder;
       Screenshot item = getItem(position);
       Picasso.get()
-          .load(new File(item.getPath()))
+          .load(Uri.parse(item.getPath()))
           .resize(400, 400)
           .centerCrop()
           .transform(new RoundedCornersTransformation(30, 0))
