@@ -37,4 +37,8 @@ public abstract class MviPresenter<S, V extends View<S>, I extends Interactor<S>
   }
 
   protected abstract Observable<Update<S>> intents(V view);
+
+  public I getInteractor() {
+    return interactor;
+  }
 }
